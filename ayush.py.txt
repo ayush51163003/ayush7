@@ -1,0 +1,25 @@
+import phonenumbers
+from phonenumbers import geocoder, carrier
+
+def get_phone_number_info(phone_number):
+    try:
+        # Parse the phone number
+        parsed_number = phonenumbers.parse(phone_number)
+
+        # Validate the phone number
+        if phonenumbers.is_valid_number(parsed_number):
+            # Get location description
+            location = geocoder.description_for_number(parsed_number, "en")
+            print(f"Location: {location}")
+
+            # Get service provider
+            service_provider = carrier.name_for_number(parsed_number, "en")
+            print(f"Service Provider: {service_provider}")
+        else:
+            print("The phone number is not valid.")
+    except phonenumbers.NumberParseException:
+        print("Error parsing the phone number. Please ensure it is in the correct format.")
+
+if __name__ == "__main__":
+    phone_number = input("Enter the phone number with country code (e.g., +1234567890): ")
+    get_phone_number_info(phone_number) 
